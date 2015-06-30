@@ -1,4 +1,4 @@
-# Tristan does dotfiles
+# fork from [Tristan does dotfiles](https://github.com/trishume/dotfiles.git)
 
 Based off of holman/dotfiles and spf13-vim
 
