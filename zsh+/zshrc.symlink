@@ -31,3 +31,8 @@ pd() {
   projDir=$(pro search $1)
   cd ${projDir}
 }
+
+[[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
+
+source ~/.bash_profile
+

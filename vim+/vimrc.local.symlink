@@ -1,0 +1,96 @@
+"使用中文帮助文档
+set helplang=cn
+"set ruler
+"set statusline=%<\ %n:%f\ %m%r%y%=%-35.(line:\ %l\ of\ %L,\ col:\ %c%V\ (%P)%)
+" 我的状态行显示的内容（包括文件类型和解码）
+"set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]
+
+" set default encrypt function
+set cm=blowfish
+
+" 总是显示状态行
+set laststatus=2
+let g:Powerline_symbols='unicode'
+
+set expandtab
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+
+" Nerdtree
+"autocmd vimenter * NERDTree
+let NERDTreeShowBookmarks=1
+let NERDTreeChDirMode=0
+let NERDTreeQuitOnOpen=0
+let NERDTreeMouseMode=2
+let NERDTreeShowHidden=1
+let NERDTreeIgnore=['\.pyc','\~$','\.swo$','\.swp$','\.git','\.hg','\.svn','\.bzr']
+let NERDTreeKeepTreeInNewTab=1
+let g:nerdtree_tabs_open_on_gui_startup=0
+ 
+nnoremap <F4> ::NERDTree<CR>
+
+set background=dark
+"colorscheme wombat
+colorscheme kellys
+
+set guifont=Monaco:h15
+
+" set encoding=utf-8
+set fenc=utf-8
+set fencs=utf-8,gbk,gb18030,gb2312,cp936,usc-bom,euc-jp
+
+" 命令行（在状态行下）的高度，默认为1，这里是2
+set cmdheight=2
+
+" 高亮显示普通txt文件（需要txt.vim脚本）
+au BufRead,BufNewFile *  setfiletype txt
+
+function Genseq()
+    echo line("'\"")
+endfunction
+
+nnoremap ,l :call Genseq()<CR>
+
+nnoremap <F5> "=strftime("%Y-%m-%d")<CR>P
+iab <expr> dts strftime("%Y-%m-%d")
+
+nnoremap tb :tabnew 
+nnoremap ,y "+y
+nnoremap ,p "+gP
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
+function Sql2java()
+"字符串替换
+:%s/^\(\s*\)\(\w\+\)\s\+VARCHAR\d\?\s*(\(\d\+\).*/\1@Column(name="\2", length=\3)\r\1private String \L\2;
+"数字替换
+:%s/^\(\s*\)\(\w\+\)\s\+NUMBER\s*(\(\d\+\).*/\1@Column(name="\2", length=\3)\r\1private Long \L\2;
+"timestamp transfer
+:%s/^\(\s*\)\(\w\+\)\s\+TIMESTAMP\s*(\(\d\+\).*/\1@Column(name="\2", length=\3)\r\1private Timestamp \L\2;
+
+let c = 0
+while c < 5
+    call _2Upper()
+    let c += 1
+endwhile
+endfunction
+
+function _2Upper()
+"下划线后第一个字母转大写
+:%s/_\(\w\)\(.*;\)/\u\1\2/g
+endfunction
+
+function Java2as()
+"java to actionscript
+"String
+%s/^\(\s*\)\(private\|public\|protected\)\s\+String\s\+\(\w\+\)/\1public var \3:String/g
+"number
+%s/^\(\s*\)\(private\|public\|protected\)\s\+\(Long\|long\|int\|Integer\|float\|Float\|double\|Double\)\s\+\(\w\+\)/\1public var \4:Number/g
+"boolean
+%s/^\(\s*\)\(private\|public\|protected\)\s\+\(boolean\|Boolean\)\s\+\(\w\+\)/\1public var \4:Boolean/g
+"timestamp
+%s/^\(\s*\)\(private\|public\|protected\)\s\+Timestamp\s\+\(\w\+\)/\1public var \3:Date/g
+endfunction

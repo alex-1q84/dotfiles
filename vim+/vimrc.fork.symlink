@@ -9,7 +9,7 @@ set noundofile
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_show_hidden = 1
 let g:indent_guides_enable_on_vim_startup = 1
-let g:snips_author = 'Tristan Hume <trishume@gmail.com>'
+let g:snips_author = 'changhai <hailxl@gmail.com>'
 
 " Editing customization
 set shiftwidth=2
@@ -21,10 +21,10 @@ set nornu
 "set showbreak=…
 
 " Visual customization
-colorscheme sublime-railscasts
-set guifont=Monaco\ for\ Powerline:h12
+"colorscheme kellys
+"set guifont=Monaco\ for\ Powerline:h12
 if has('gui_macvim')
-  let g:Powerline_symbols = 'fancy'
+  "let g:Powerline_symbols = 'fancy'
   set transparency=0          " Make the window slightly transparent
   set lines=60
 endif
@@ -117,12 +117,12 @@ map <leader>nt :NERDTree<CR>
 "iunmap <Tab>
 
 " Arpeggio
-call arpeggio#load()
-"Arpeggio inoremap ht <Esc>
-Arpeggio inoremap tn <Esc>
-Arpeggio inoremap eu <Esc>
-Arpeggio nnoremap <silent> eh :tabp<CR>
-Arpeggio nnoremap <silent> el :tabn<CR>
+"call arpeggio#load()
+""Arpeggio inoremap ht <Esc>
+"Arpeggio inoremap tn <Esc>
+"Arpeggio inoremap eu <Esc>
+"Arpeggio nnoremap <silent> eh :tabp<CR>
+"Arpeggio nnoremap <silent> el :tabn<CR>
 
 " Ctrlp customization
 let g:ctrlp_extensions = ['tag', 'buffertag', 'dir']
