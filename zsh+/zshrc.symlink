@@ -83,7 +83,7 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 export ZSH_RC=$HOME/.dotfiles
 
 # your project folder that we can `c [tab]` to
-#export PROJECTS=~/Box/Dev
+export PROJECTS=~/work/geniexpress/
 #export SITE_DEPLOY_PATH=~/Box/Sites/thume
 
 # source every .zsh file in this rep

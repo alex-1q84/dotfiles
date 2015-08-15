@@ -41,12 +41,13 @@ end
 local hotkeys = {}
 
 function createHotkeys()
+  --遍历k-v表并创建热键绑定
   for key, fun in pairs(definitions) do
     local mod = hyper
     if string.len(key) == 2 and string.sub(key,2,2) == "c" then
-      mod = {"cmd"}
+      mod = {"cmd", "alt"}
     elseif string.len(key) == 2 and string.sub(key,2,2) == "l" then
-      mod = {"ctrl"}
+      mod = {"ctrl", "shift"}
     end
 
     local hk = hotkey.new(mod, string.sub(key,1,1), fun)
@@ -61,7 +62,7 @@ function rebindHotkeys()
   end
   hotkeys = {}
   createHotkeys()
-  alert.show("Rebound Hotkeys")
+  --alert.show("Rebound Hotkeys")
 end
 
 function applyPlace(win, place)
@@ -86,14 +87,14 @@ end
 function init()
   createHotkeys()
   keycodes.inputSourceChanged(rebindHotkeys)
-  tabs.enableForApp("Emacs")
+  --tabs.enableForApp("Emacs")
 
   alert.show("Hammerspoon, at your service.")
 end
 
 -- Actual config =================================
 
-hyper = {"cmd", "alt", "ctrl","shift"}
+hyper = {"cmd", "ctrl","shift"}
 hyper2 = {"ctrl"}
 hs.window.animationDuration = 0;
 -- hints.style = "vimperator"
@@ -142,8 +143,8 @@ definitions = {
 
   k = function() hints.windowHints(appfinder.appFromName("Emacs"):allWindows()) end,
   j = function() hints.windowHints(window.focusedWindow():application():allWindows()) end,
-  ll = function() hyper, hyper2 = hyper2,hyper; rebindHotkeys() end,
-  ec = function() hints.windowHints(nil) end
+  --ll = function() hyper, hyper2 = hyper2,hyper; rebindHotkeys() end,
+  el = function() hints.windowHints(nil) end
 }
 
 -- launch and focus applications
@@ -156,6 +157,7 @@ fnutils.each({
 }, function(object)
     definitions[object.key] = function()
       local app = appfinder.appFromName(object.app)
+      --alert.show(app)
       if app then app:activate() end
     end
 end)

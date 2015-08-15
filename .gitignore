@@ -9,3 +9,4 @@ ranger/ranger.config/history
 fish+/fish.config/fish_history
 fish+/fish.config/fishd.*
 .DS_Store
+.idea

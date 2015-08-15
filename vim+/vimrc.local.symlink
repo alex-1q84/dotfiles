@@ -17,20 +17,6 @@ set shiftwidth=4
 set tabstop=4
 set softtabstop=4
 
-" Nerdtree
-"autocmd vimenter * NERDTree
-let NERDTreeShowBookmarks=1
-let NERDTreeChDirMode=0
-let NERDTreeQuitOnOpen=0
-let NERDTreeMouseMode=2
-let NERDTreeShowHidden=1
-let NERDTreeIgnore=['\.pyc','\~$','\.swo$','\.swp$','\.git','\.hg','\.svn','\.bzr']
-let NERDTreeKeepTreeInNewTab=1
-let g:nerdtree_tabs_open_on_gui_startup=0
- 
-nnoremap <F4> ::NERDTree<CR>
-
-set background=dark
 "colorscheme wombat
 colorscheme kellys
 
@@ -56,8 +42,23 @@ nnoremap <F5> "=strftime("%Y-%m-%d")<CR>P
 iab <expr> dts strftime("%Y-%m-%d")
 
 nnoremap tb :tabnew 
-nnoremap ,y "+y
-nnoremap ,p "+gP
+
+" set clipboard to default
+set clipboard=
+if has ("unix") && "Darwin" != system("echo -n \"$(uname)\"")
+  " on Linux use + register for copy-paste
+  nnoremap <leader>y "+y
+  vmap <leader>y "+y
+  nnoremap <leader>p "+gP
+  vmap <leader>p "+gP
+else
+  " one mac and windows, use * register for copy-paste
+  nnoremap <leader>y "*y
+  vmap <leader>y "*y
+  nnoremap <leader>p "*gP
+  vmap <leader>p "*gP
+endif
+
 map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
@@ -93,4 +94,8 @@ function Java2as()
 %s/^\(\s*\)\(private\|public\|protected\)\s\+\(boolean\|Boolean\)\s\+\(\w\+\)/\1public var \4:Boolean/g
 "timestamp
 %s/^\(\s*\)\(private\|public\|protected\)\s\+Timestamp\s\+\(\w\+\)/\1public var \3:Date/g
+endfunction
+
+function ToOptUpdate()
+  %s!\v(.*\{)([^,]+)(.*\}.*)!<if test="\2 \!= null">\r&\r</if>!g
 endfunction
