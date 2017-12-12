@@ -18,7 +18,7 @@ set tabstop=4
 set softtabstop=4
 
 "colorscheme wombat
-"colorscheme kellys
+colorscheme tango-desert
 
 set guifont=Monaco:h15
 
@@ -31,12 +31,15 @@ set cmdheight=2
 
 " 高亮显示普通txt文件（需要txt.vim脚本）
 au BufRead,BufNewFile *  setfiletype txt
+" 支持编辑crontab文件
+" au FileType crontab set backupcopy=yes
+set nobackup
 
 function Genseq()
     echo line("'\"")
 endfunction
 
-nnoremap ,l :call Genseq()<CR>
+nnoremap <leader>l :call Genseq()<CR>
 
 nnoremap <F5> "=strftime("%Y-%m-%d")<CR>P
 iab <expr> dts strftime("%Y-%m-%d")
@@ -63,6 +66,25 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
+
+nnoremap <silent> <C-L> :<C-u>nohlsearch<CR><C-l>
+
+" tab switch
+map <D-1> 1gt<CR>
+map <D-2> 2gt<CR>
+map <D-3> 3gt<CR>
+map <D-4> 4gt<CR>
+map <D-5> 5gt<CR>
+map <D-6> 6gt<CR>
+map <D-7> 7gt<CR>
+map <D-8> 8gt<CR>
+map <D-9> 9gt<CR>
+
+" close current tab
+map <D-w> :q<CR>
+
+"防止 pymode 初始化导致 vim 僵死
+let g:pymode_rope_lookup_project = 0
 
 function Sql2java()
 "字符串替换

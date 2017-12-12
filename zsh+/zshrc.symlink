@@ -45,13 +45,13 @@ CASE_SENSITIVE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git brew gnu-utils autojump mercurial mvn osx svn pip z)
+plugins=(git git-flow-avh gnu-utils autojump mercurial mvn osx svn pip z)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+#export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -103,16 +103,14 @@ then
   source ~/.localrc
 fi
 
-# start the pry shell
-# pry
-
-# pro cd function
-pd() {
-  projDir=$(pro search $1)
-  cd ${projDir}
-}
-
 [[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
 
 source ~/.bash_profile
 
+export NVM_DIR="/Users/mywo/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+# sub commands init
+eval "$(/Users/mywo/bin/s/bin/s init -)"

@@ -1,3 +1,6 @@
 "UnBundle "PIV"
 Bundle "vim-scripts/kellys"
 Bundle "vim-scripts/txt.vim"
+
+" set leader key
+let g:spf13_leader=' '

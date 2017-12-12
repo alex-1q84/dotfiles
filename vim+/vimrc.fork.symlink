@@ -11,15 +11,6 @@ let g:ctrlp_show_hidden = 1
 let g:indent_guides_enable_on_vim_startup = 1
 let g:snips_author = 'changhai <hailxl@gmail.com>'
 
-" Editing customization
-set shiftwidth=2
-set tabstop=2
-set softtabstop=2
-set wrap
-set linebreak
-set nornu
-"set showbreak=…
-
 " Visual customization
 "colorscheme kellys
 "set guifont=Monaco\ for\ Powerline:h12
@@ -66,7 +57,7 @@ au BufRead *.md call SetWrap()
 " Fancy remaps
 "inoremap hh <Esc>l
 "inoremap jj <Esc>
-nnoremap ; :
+"nnoremap ; :
 nmap <silent> <leader>vr :e ~/.dotfiles/vim+/vimrc.fork.symlink<CR>
 nmap <silent> <leader>d <Plug>DashSearch
 nmap <silent> <leader>t<Space>  :tabnew<CR>
@@ -129,18 +120,18 @@ let g:ctrlp_extensions = ['tag', 'buffertag', 'dir']
 nnoremap <leader>b :CtrlPBuffer<CR>
 
 " Set working directory to project root
-function! s:setcwd()
-  let cph = expand('%:p:h', 1)
-  if cph =~ '^.\+://' | retu | en
-  for mkr in ['DATA1.txt', 'DATA2.txt', 'DATA3.txt', 'DATA4.txt', 'DATA5.txt', '.git/', '.hg/', '.svn/', '.bzr/', '_darcs/', '.vimprojects','.vim']
-    let wd = call('find'.(mkr =~ '/$' ? 'dir' : 'file'), [mkr, cph.';'])
-    if wd != '' | let &acd = 0 | brea | en
-  endfo
-  exe 'cd!' fnameescape(wd == '' ? cph : substitute(wd, mkr.'$', '.', ''))
-endfunction
-
-autocmd BufEnter * call s:setcwd()
-nmap <silent> <leader>cd :call <SID>setcwd()<CR>
+"function! s:setcwd()
+"  let cph = expand('%:p:h', 1)
+"  if cph =~ '^.\+://' | retu | en
+"  for mkr in ['DATA1.txt', 'DATA2.txt', 'DATA3.txt', 'DATA4.txt', 'DATA5.txt', '.git/', '.hg/', '.svn/', '.bzr/', '_darcs/', '.vimprojects','.vim']
+"    let wd = call('find'.(mkr =~ '/$' ? 'dir' : 'file'), [mkr, cph.';'])
+"    if wd != '' | let &acd = 0 | brea | en
+"  endfo
+"  exe 'cd!' fnameescape(wd == '' ? cph : substitute(wd, mkr.'$', '.', ''))
+"endfunction
+"
+"autocmd BufEnter * call s:setcwd()
+"nmap <silent> <leader>cd :call <SID>setcwd()<CR>
 
 
 " Moving around windows with hyper
