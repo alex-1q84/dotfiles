@@ -12,3 +12,4 @@ endif
 set guioptions-=rL
 " Don't use mac alerts, use vim prompts instead
 set guioptions+=c
+"colorscheme solarized
