@@ -80,7 +80,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # shortcut to this dotfiles path is $ZSH_RC
-export ZSH_RC=$HOME/.dotfiles
+export ZSH_RC=$HOME/lab/dotFiles
 
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/work/geniexpress/
