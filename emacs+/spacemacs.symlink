@@ -553,10 +553,9 @@ you should place your code here."
   (setq ns-pop-up-frames nil)
   ;; 启动 emacs server，加速后续文件打开速度
   ;; (server-start)
-  ;(spacemacs/toggle-evil-cleverparens-on)
-  ;(add-hook 'racket-mode-hook #'evil-cleverparens-mode)
   (setq racket-program "/usr/local/opt/Racket/bin/racket")
   ;; (spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hook-racket-mode)
+  (spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hooks)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
