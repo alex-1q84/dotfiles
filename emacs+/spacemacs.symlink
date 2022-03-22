@@ -32,8 +32,8 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
-     racket
+    '(lua
+       racket
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -241,7 +241,7 @@ It should only modify the values of Spacemacs settings."
    ;; Default font or prioritized list of fonts. The `:size' can be specified as
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
-   dotspacemacs-default-font '("Fira code"
+   dotspacemacs-default-font '("Monaco"
                                :size 16.0
                                :weight normal
                                :width normal)
@@ -400,7 +400,7 @@ It should only modify the values of Spacemacs settings."
    ;;   :size-limit-kb 1000)
    ;; When used in a plist, `visual' takes precedence over `relative'.
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers t
 
    ;; Code folding method. Possible values are `evil', `origami' and `vimish'.
    ;; (default 'evil)
@@ -522,7 +522,8 @@ variables declared in `~/.spacemacs.env' or `~/.spacemacs.d/.spacemacs.env'.
 See the header of this file for more information."
   (spacemacs/load-spacemacs-env))
 
-(defun dotspacemacs/user-init ()
+(defun
+dotspacemacs/user-init ()
   "Initialization for user code:
 This function is called immediately after `dotspacemacs/init', before layer
 configuration.
@@ -532,7 +533,8 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   (setq configuration-layer--elpa-archives
     '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
       ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
-      ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))))
+      ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
+  (setq dotspacemacs-configuration-layer-path "~/.spacemacs.d/private"))
 
 
 (defun dotspacemacs/user-load ()
@@ -549,14 +551,82 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+
+  (defun xah-comment-dwim ()
+    "Like `comment-dwim', but toggle comment if cursor is not at end of line.
+
+    URL `http://xahlee.info/emacs/emacs/emacs_toggle_comment_by_line.html'
+    Version 2016-10-25"
+    (interactive)
+    (if (region-active-p)
+      (comment-dwim nil)
+      (let (($lbp (line-beginning-position))
+             ($lep (line-end-position)))
+        (if (eq $lbp $lep)
+          (progn
+            (comment-dwim nil))
+          (if (eq (point) $lep)
+            (progn
+              (comment-dwim nil))
+            (progn
+              (comment-or-uncomment-region $lbp $lep)
+              (forward-line )))))))
+
+  ;; workaround for issues
+  ;; https://github.com/syl20bnr/spacemacs/issues/10410
+  (defun kill-minibuffer ()
+    (interactive)
+    (when (windowp (active-minibuffer-window))
+      (evil-ex-search-exit)))
+
+
+  ;; 覆盖默认代码注释权限
+  (global-set-key (kbd "M-;") 'xah-comment-dwim)
+
   ;; 设置在当前框架内打开新文件
   (setq ns-pop-up-frames nil)
-  ;; 启动 emacs server，加速后续文件打开速度
-  ;; (server-start)
+
   (setq racket-program "/usr/local/opt/Racket/bin/racket")
-  ;; (spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hook-racket-mode)
   (spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hooks)
-  )
+
+  ;; 关闭配置，这个设置看起来会加剧自动输入多余字符的概率
+  ;; 设置中文输入法自动切换
+  ;; https://github.com/laishulu/emacs-smart-input-source
+  ;; (sis-ism-lazyman-config
+  ;;   "com.apple.keylayout.US"
+  ;;   "im.rime.inputmethod.Squirrel.Rime")
+  ;; ;; enable the /cursor color/ mode
+  ;; (sis-global-cursor-color-mode t)
+  ;; ;; enable the /respect/ mode
+  ;; (sis-global-respect-mode t)
+  ;; ;; enable the /context/ mode for all buffers
+  ;; (sis-global-context-mode t)
+  ;; ;; enable the /inline english/ mode for all buffers
+  ;; (sis-global-inline-mode t)
+
+  ;; workaround for 自动输入多余字符 bug
+  (add-hook 'mouse-leave-buffer-hook #'kill-minibuffer)
+  (setq evil-search-module 'isearch))
+
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+    '(dash-at-point git-gutter-fringe+ fringe-helper git-gutter+ browse-at-remote treemacs-magit smeargle helm-gitignore helm-git-grep gitignore-templates git-timemachine git-messenger git-link forge yaml magit ghub closql emacsql-sqlite emacsql treepy magit-section git-commit with-editor transient dash helm-gtags ggtags counsel-gtags counsel swiper ivy company-lua lua-mode sis terminal-focus-reporting yasnippet-snippets ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill undo-tree treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil toc-org symon symbol-overlay string-inflection string-edit spaceline-all-the-icons restart-emacs request rainbow-delimiters racket-mode quickrun popwin pcre2el password-generator paradox overseer org-superstar open-junk-file nameless mwim multi-line mmm-mode markdown-toc macrostep lorem-ipsum link-hint indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gh-md fuzzy font-lock+ flycheck-pos-tip flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu emr elisp-slime-nav editorconfig dumb-jump drag-stuff dotenv-mode dired-quick-sort diminish define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)

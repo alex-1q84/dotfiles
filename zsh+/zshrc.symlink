@@ -45,11 +45,14 @@ CASE_SENSITIVE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git git-flow-avh gnu-utils autojump mercurial mvn osx svn pip z docker golang)
+plugins=(git git-flow-avh gnu-utils autojump mercurial mvn osx svn pip z docker golang vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+
+# enable vi mode
+bindkey -v
 
 #export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -114,3 +117,6 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 # sub commands init
 eval "$(/Users/mywo/bin/s/bin/s init -)"
+
+# use McFly for zsh history search, see more details on https://github.com/cantino/mcfly
+eval "$(mcfly init zsh)"
